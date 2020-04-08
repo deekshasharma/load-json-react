@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ffffff;
+  color: #00bcd4;
 }
 
 .stock-container {
@@ -19,17 +19,20 @@
   margin-top: 3em;
 }
 
-.stock {
-  padding-bottom: 0.4em;
-  padding-top: 0.4em;
-  margin-bottom: 0.3em;
-  border-radius: 0.5em;
-  border: 0.5px solid gray
+table{
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
+
+}
+td {
+    border: 1px solid gray;
+    width: 30em;
+
 }
 
-.refresh-container {
-  padding-right: 3em;
-  padding-top: 3em;
-  display: flex;
-  justify-content: flex-end;
+thead,
+tfoot {
+    background-color: #333;
+    color: #fff;
 }
