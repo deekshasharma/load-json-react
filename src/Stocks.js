@@ -21,7 +21,6 @@ export const Stocks = () => {
           );
         })}
       </div>
-      <Stock />
     </>
   );
 };
