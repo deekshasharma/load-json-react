@@ -92,7 +92,7 @@ export default App;
 
 ## Create Stocks Component
 
-- Since we need to render this `JSON` data in the tabular format, we will now add a new component inside the `src` directory and name it `Stocks.js`.
+- We need to render the `JSON` data in the tabular format, we will now add a new component inside the `src` directory and name it `Stocks.js`.
   The location of `<Stocks/>` component inside your project should be `src/Stocks.js`. Add this code to your `<Stocks>` component file.
 
 ```js
@@ -172,9 +172,9 @@ Let's understand what the above code does. We map over the `stockData` JSON arra
 
 - We have already loaded the data, the last piece of work is to render that data in a component. There are couple of changes we need to make:
 
-   1) Add a `<HomePageHeader>` component to display a header
-   2) Add a `<Stock>` component which accept data in props and render a table on the web page.
-   3) Refactor the code inside `<Stocks>` component to accomodate the above 2 changes.
+  1.  Add a `<HomePageHeader>` component to display a header
+  2.  Add a `<Stock>` component which accept data in props and render a table on the web page.
+  3.  Refactor the code inside `<Stocks>` component to accomodate the above 2 changes.
 
 - Go ahead and add this piece of code for `<HomePageHeader>` component inside your `src/Stocks.js` file
 
@@ -187,6 +187,7 @@ const HomePageHeader = () => {
   );
 };
 ```
+
 - `<HomePageHeader>` component uses a css class `header`, so we need to add it inside `src/App.css`
 
 ```css
@@ -229,6 +230,113 @@ const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
   );
 };
 ```
+This component accept `props` and returns an HTML `table` for a stock with 4 columns each rendering the company name, ticker, stock price and time elapsed in seconds.
+
+- Next let's do some styling for the table. To do so, add this code inside `src/App.js` file.
+
+```css
+table {
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
+}
+td {
+  border: 1px solid gray;
+  width: 30em;
+}
+```
+- Finally, we need to refactor `<Stocks>` component so it can call `<HomePageHeader>` and `<Stock>` components we just created. The code below renders `<Stocks>` component containing a `<HomePageHeader>` and `<Stock>` for every element in inside the `stockData` array. Instead of displaying the `JSON` data inside a `div`, we now pass it as `props` to `<Stock>` component.
+
+```js
+export const Stocks = () => {
+  return (
+    <>
+      <HomePageHeader />
+      <div className="stock-container">
+        {stockData.map((data, key) => {
+          return (
+            <div key={key}>
+              <Stock
+                key={key}
+                company={data.company}
+                ticker={data.ticker}
+                stockPrice={data.stockPrice}
+                timeElapsed={data.timeElapsed}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
+```
+Make sure your `src/Stocks.js` looks exactly like this before you are ready to view the webpage in your browser. 
+
+```js
+import React from "react";
+import "./App.css";
+import { stockData } from "./data";
+
+export const Stocks = () => {
+  return (
+    <>
+      <HomePageHeader />
+      <div className="stock-container">
+        {stockData.map((data, key) => {
+          return (
+            <div key={key}>
+              <Stock
+                key={key}
+                company={data.company}
+                ticker={data.ticker}
+                stockPrice={data.stockPrice}
+                timeElapsed={data.timeElapsed}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
+const HomePageHeader = () => {
+  return (
+    <header className="header">
+      <h2>Your Stock Tracker</h2>
+    </header>
+  );
+};
+
+const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
+  if (!company) return <div />;
+  return (
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <h5>{company}</h5>
+          </td>
+          <td>
+            <h5>{ticker}</h5>
+          </td>
+          <td>
+            <h4>{stockPrice}</h4>
+          </td>
+          <td>
+            <p>{timeElapsed}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+};
+
+```
+
+- Go to the browser and open [http://localhost:3000](http://localhost:3000), you should be able to see the `JSON` data we sourced from an external file into a tabular format.
 
 
 ## Build and Deploy this Application
