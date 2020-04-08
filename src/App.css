@@ -3,14 +3,14 @@
 }
 
 .header {
-  background-color: #282c34;
+  background-color: #f4e04d;
   min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #00bcd4;
+  color: #10375c;
 }
 
 .stock-container {
