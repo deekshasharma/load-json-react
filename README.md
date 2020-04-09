@@ -2,15 +2,13 @@
 
 - Open your terminal and run these commands to get a sample Create React App running on your machine.
 
-```sh
+  ```sh
+  npx create-react-app load-json-data
 
-npx create-react-app load-json-data
+  cd load-json-data
 
-cd load-json-data
-
-yarn start
-
-```
+  yarn start
+  ```
 
 - Now to run the app in the development mode, <br />
   open [http://localhost:3000](http://localhost:3000) in the browser and you should see the sample app running with this React logo.
@@ -18,7 +16,6 @@ yarn start
 ## Add JSON Data to a File
 
 Create a file in your project at location - `src/data.js` and add the data below in your `data.js` file.
-/// TBD: Add about export const
 
 ```js
 export const stockData = [
@@ -61,292 +58,289 @@ export const stockData = [
 ];
 ```
 
-This is a `JSON` array containing dummy stock prices of some companies. Each `JSON` Object inside this array contain
+`stockData` is a `JSON` array containing dummy stock prices of some companies. Each `JSON` Object inside this array contain
 
 - Name of the company
 - Stock ticker for the company
 - Price of its stock
 - Last updated time in seconds
 
+Using `export const` allows you to define and initialize `variables` that can be imported inside any React component. In fact we will shortly import `stockData` as a JavaScript object in the next step.
+
 ## Update App Component
 
 - It's time to update our `<App>` component because we need to render `JSON` data into our components. So head on to the `src/App.js` file and remove all the boilerplate code that came with it. Instead add this piece of code to the App component.
 
-```js
-import React from "react";
-import "./App.css";
-import { Stocks } from "./Stocks";
+  ```js
+  import React from "react";
+  import "./App.css";
+  import { Stocks } from "./Stocks";
 
-function App() {
-  return (
-    <div className="App">
-      <Stocks />
-    </div>
-  );
-}
+  function App() {
+    return (
+      <div className="App">
+        <Stocks />
+      </div>
+    );
+  }
 
-export default App;
-```
+  export default App;
+  ```
 
-- Go to the browser and open [http://localhost:3000](http://localhost:3000) you will see errors in the application because `<App/>` component wraps and return a `<Stocks/>` component which doesn't exist as of yet. Don't worry we will add this new component next.
+- Go to the browser and open [http://localhost:3000](http://localhost:3000).You will see errors in the application because `<App/>` component wraps and return a `<Stocks/>` component which doesn't exist as of yet. Don't worry we will add this new component next.
 
 ## Create Stocks Component
 
-- We need to render the `JSON` data in the tabular format, we will now add a new component inside the `src` directory and name it `Stocks.js`.
-  The location of `<Stocks/>` component inside your project should be `src/Stocks.js`. Add this code to your `<Stocks>` component file.
+- We will now add a new component inside the `src` directory and name it `Stocks.js`.
+  The location of `<Stocks/>` component inside your project should be `src/Stocks.js`. Add the code below to your `<Stocks>` component file. The code currently doesn't do anything except returning a `<div>` containing message **Welcome to Stock Tracker** but we will extend this code shortly.
 
-```js
-import React from "react";
-import "./App.css";
+  ```js
+  import React from "react";
+  import "./App.css";
 
-export const Stocks = () => {
-  return (
-    <>
-      <div className="stock-container">Welcome to Stock Tracker</div>
-    </>
-  );
-};
-```
+  export const Stocks = () => {
+    return (
+      <>
+        <div className="stock-container">Welcome to Stock Tracker</div>
+      </>
+    );
+  };
+  ```
 
-This code currently doesn't do anything except returning a `<div>` containing message **Welcome to Stock Tracker** but we will extend this code shortly.
+- Let's also add the `css` class `stock-container` inside `src/App.css` file. The code inside `App.css` file should look like this.
 
-- Let's also add the `css` class `stock-container` inside `src/App.css` file. The code inside `App.css` file should look like this:
+  ```css
+  .App {
+    text-align: center;
+  }
 
-```css
-.App {
-  text-align: center;
-}
+  .stock-container {
+    padding-left: 3em;
+    padding-right: 3em;
+    margin-top: 3em;
+  }
+  ```
 
-.stock-container {
-  padding-left: 3em;
-  padding-right: 3em;
-  margin-top: 3em;
-}
-```
-
-- Go to the browser and open [http://localhost:3000](http://localhost:3000), this message should be rendered on your web page and there should not be any errors.
+- Go to the browser and open [http://localhost:3000](http://localhost:3000). You should see a message **Welcome to Stock Tracker** rendered on your web page and there should not be any errors.
 
 ## Load JSON Data into Stocks Component
 
 - Now that your `<Stocks>` component is ready, we can get the JSON data from the `src/data.js` file and render inside `<Stocks>`. React allow using named imports and we can leverage that to load `JSON` data. So go ahead and add this `import` in your `src/Stocks.js` file.
 
-```js
-import { stockData } from "./data";
-```
+  ```js
+  import { stockData } from "./data";
+  ```
 
 - Next task is to iterate over the `stockData` array imported from `data.js` file. Inside your `<Stocks>` component add this code.
 
-```js
-import React from "react";
-import "./App.css";
-import { stockData } from "./data";
+  ```js
+  import React from "react";
+  import "./App.css";
+  import { stockData } from "./data";
 
-export const Stocks = () => {
-  return (
-    <>
-      <div className="stock-container">
-        {stockData.map((data, key) => {
-          return (
-            <div key={key}>
-              {data.company +
-                " , " +
-                data.ticker +
-                " ," +
-                data.stockPrice +
-                ", " +
-                data.timeElapsed}
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
-};
-```
+  export const Stocks = () => {
+    return (
+      <>
+        <div className="stock-container">
+          {stockData.map((data, key) => {
+            return (
+              <div key={key}>
+                {data.company +
+                  " , " +
+                  data.ticker +
+                  " ," +
+                  data.stockPrice +
+                  ", " +
+                  data.timeElapsed}
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
+  };
+  ```
 
-Let's understand what the above code does. We map over the `stockData` JSON array which takes a callback function as argument. This function is then called for every stock inside `stockData` array. Each time callback executes, it returns and renders a `<div>` displaying data for every company in a comma separated manner.
+  Let's understand what the above code does. We map over the `stockData` JSON array which takes a callback function as argument. This function is then called for every stock inside `stockData` array. Each time callback executes, it returns and renders a `<div>` displaying data for every company in a comma separated manner.
 
-- Go to the browser and open [http://localhost:3000](http://localhost:3000), the data for all stocks should be rendered row wise on the web page. We will render this in a tabular format in the next step. But for now, you should at least see all your `JSON` data.
+- Go to the browser and open [http://localhost:3000](http://localhost:3000), the data for all stocks should be rendered row wise on the web page. We will render this in a tabular format in the next step. But for now, you should see all your `JSON` data.
 
 ## Display Stock Information In a Tabular Format
 
-- We have already loaded the data, the last piece of work is to render that data in a component. There are couple of changes we need to make:
+- The last piece of work is to render that data in a component. There are couple of changes we need to make:
 
-  1.  Add a `<HomePageHeader>` component to display a header
+  1.  Add a `<HomePageHeader>` component to display a header.
   2.  Add a `<Stock>` component which accept data in props and render a table on the web page.
   3.  Refactor the code inside `<Stocks>` component to accomodate the above 2 changes.
 
-- Go ahead and add this piece of code for `<HomePageHeader>` component inside your `src/Stocks.js` file
+- Let's add this piece of code for `<HomePageHeader>` component inside `src/Stocks.js` file
 
-```js
-const HomePageHeader = () => {
-  return (
-    <header className="header">
-      <h2>Your Stock Tracker</h2>
-    </header>
-  );
-};
-```
+  ```js
+  const HomePageHeader = () => {
+    return (
+      <header className="header">
+        <h2>Your Stock Tracker</h2>
+      </header>
+    );
+  };
+  ```
 
-- `<HomePageHeader>` component uses a css class `header`, so we need to add it inside `src/App.css`
+- `<HomePageHeader>` component also uses a css class `header`, so we need to add it inside `src/App.css`
 
-```css
-.header {
-  background-color: #f4e04d;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #10375c;
-}
-```
+  ```css
+  .header {
+    background-color: #f4e04d;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #10375c;
+  }
+  ```
 
 - Next task is to create a `<Stock>` component so that we can abstract out code to render each stock separately. Go ahead and add this code for `<Stock>` component inside your `src/Stocks.js` file.
 
-```js
-const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
-  if (!company) return <div />;
-  return (
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            <h5>{company}</h5>
-          </td>
-          <td>
-            <h5>{ticker}</h5>
-          </td>
-          <td>
-            <h4>{stockPrice}</h4>
-          </td>
-          <td>
-            <p>{timeElapsed}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  );
-};
-```
-This component accept `props` and returns an HTML `table` for a stock with 4 columns each rendering the company name, ticker, stock price and time elapsed in seconds.
+    ```js
+    const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
+      if (!company) return <div />;
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <h5>{company}</h5>
+              </td>
+              <td>
+                <h5>{ticker}</h5>
+              </td>
+              <td>
+                <h4>{stockPrice}</h4>
+              </td>
+              <td>
+                <p>{timeElapsed}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      );
+    };
+    ```
 
-- Next let's do some styling for the table. To do so, add this code inside `src/App.js` file.
+  This component accept `props` and returns an HTML `table` for a stock with 4 columns each rendering the company name, ticker, stock price and time elapsed in seconds.
 
-```css
-table {
-  display: flex;
-  justify-content: center;
-  border: 1px solid gray;
-}
-td {
-  border: 1px solid gray;
-  width: 30em;
-}
-```
+- Next let's do some styling for the table. To do so, we need to the `css` code inside `src/App.css` file.
+
+    ```css
+    table {
+      display: flex;
+      justify-content: center;
+      border: 1px solid gray;
+    }
+    td {
+      border: 1px solid gray;
+      width: 30em;
+    }
+    ```
+
 - Finally, we need to refactor `<Stocks>` component so it can call `<HomePageHeader>` and `<Stock>` components we just created. The code below renders `<Stocks>` component containing a `<HomePageHeader>` and `<Stock>` for every element in inside the `stockData` array. Instead of displaying the `JSON` data inside a `div`, we now pass it as `props` to `<Stock>` component.
 
-```js
-export const Stocks = () => {
-  return (
-    <>
-      <HomePageHeader />
-      <div className="stock-container">
-        {stockData.map((data, key) => {
-          return (
-            <div key={key}>
-              <Stock
-                key={key}
-                company={data.company}
-                ticker={data.ticker}
-                stockPrice={data.stockPrice}
-                timeElapsed={data.timeElapsed}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
-};
+    ```js
+    export const Stocks = () => {
+      return (
+        <>
+          <HomePageHeader />
+          <div className="stock-container">
+            {stockData.map((data, key) => {
+              return (
+                <div key={key}>
+                  <Stock
+                    key={key}
+                    company={data.company}
+                    ticker={data.ticker}
+                    stockPrice={data.stockPrice}
+                    timeElapsed={data.timeElapsed}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </>
+      );
+    };
+    ```
 
-```
-Make sure your `src/Stocks.js` looks exactly like this before you are ready to view the webpage in your browser. 
+  Make sure your `src/Stocks.js` looks exactly like this before you are ready to view the webpage in your browser.
 
-```js
-import React from "react";
-import "./App.css";
-import { stockData } from "./data";
+    ```js
+    import React from "react";
+    import "./App.css";
+    import { stockData } from "./data";
 
-export const Stocks = () => {
-  return (
-    <>
-      <HomePageHeader />
-      <div className="stock-container">
-        {stockData.map((data, key) => {
-          return (
-            <div key={key}>
-              <Stock
-                key={key}
-                company={data.company}
-                ticker={data.ticker}
-                stockPrice={data.stockPrice}
-                timeElapsed={data.timeElapsed}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
-};
+    export const Stocks = () => {
+      return (
+        <>
+          <HomePageHeader />
+          <div className="stock-container">
+            {stockData.map((data, key) => {
+              return (
+                <div key={key}>
+                  <Stock
+                    key={key}
+                    company={data.company}
+                    ticker={data.ticker}
+                    stockPrice={data.stockPrice}
+                    timeElapsed={data.timeElapsed}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </>
+      );
+    };
 
-const HomePageHeader = () => {
-  return (
-    <header className="header">
-      <h2>Your Stock Tracker</h2>
-    </header>
-  );
-};
+    const HomePageHeader = () => {
+      return (
+        <header className="header">
+          <h2>Your Stock Tracker</h2>
+        </header>
+      );
+    };
 
-const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
-  if (!company) return <div />;
-  return (
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            <h5>{company}</h5>
-          </td>
-          <td>
-            <h5>{ticker}</h5>
-          </td>
-          <td>
-            <h4>{stockPrice}</h4>
-          </td>
-          <td>
-            <p>{timeElapsed}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  );
-};
-
-```
+    const Stock = ({ company, ticker, stockPrice, timeElapsed }) => {
+      if (!company) return <div />;
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <h5>{company}</h5>
+              </td>
+              <td>
+                <h5>{ticker}</h5>
+              </td>
+              <td>
+                <h4>{stockPrice}</h4>
+              </td>
+              <td>
+                <p>{timeElapsed}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      );
+    };
+    ```
 
 - Go to the browser and open [http://localhost:3000](http://localhost:3000), you should be able to see the `JSON` data we sourced from an external file into a tabular format.
 
-
 ## Build and Deploy this Application
 
-`yarn build`
-
-Builds the app for production to the `build` folder.<br />
+To build the app for production to the `build` folder.<br />
+use `yarn build` on your terminal inside the root of the project.<br/>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
