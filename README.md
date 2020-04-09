@@ -1,3 +1,15 @@
+# How to load JSON data from a local file into React JS?
+
+## Introduction
+When building applications in React, we often need to work with `JSON`. This data could come from third party APIs or may be read from external files. We will work on a code example to see to load the `JSON` data from a file and render it inside a React Component.
+
+## Use Case
+Let's consider a data set in JSON format containing financial stocks of muliple companies. Our goal is to 
+read that data from an external file and render on the web page in a tabular format as shown below.
+
+![Stock Tracker](https://i.imgur.com/O2UYVP5.png)
+
+
 ## Set up React Application
 
 - Open your terminal and run these commands to get a sample Create React App running on your machine.
