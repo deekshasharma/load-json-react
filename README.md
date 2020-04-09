@@ -5,7 +5,6 @@ Let's consider a data set in JSON format containing financial stocks of muliple 
 
 ![Stock Tracker](https://i.imgur.com/O2UYVP5.png)
 
-
 ## How to run this project
 
 - Open your terminal and run these commands to get a sample Create React App running on your machine.
